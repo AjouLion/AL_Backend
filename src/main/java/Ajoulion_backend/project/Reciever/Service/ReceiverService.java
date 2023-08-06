@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.Receiver;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.ArrayList;
@@ -23,12 +24,22 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ReceiverService {
-
     private final ReceiverRepository recvRepository;
     private final UserRepository userRepository;
 
+    public UsersDto loginUser;
+
     public List<ApplyDto> getApplyList() {
         List<Apply> applyList = recvRepository.findAll();
+        List<ApplyDto> applyDtoList = new ArrayList<>();
+        for (Apply apply : applyList) {
+            applyDtoList.add(new ApplyDto(apply));
+        }
+        return applyDtoList;
+    }
+
+    public List<ApplyDto> getApplyListForUser(Long userId) {
+        List<Apply> applyList = recvRepository.findByUserId(userId);
         List<ApplyDto> applyDtoList = new ArrayList<>();
         for (Apply apply : applyList) {
             applyDtoList.add(new ApplyDto(apply));
@@ -48,10 +59,15 @@ public class ReceiverService {
 
     public ResponseEntity logincheck(HttpServletRequest request){
         HttpSession session = request.getSession();
-        UsersDto user = (UsersDto) session.getAttribute("login");
+        loginUser = (UsersDto) session.getAttribute("login");
         log.info("login checking . . . ");
-        if (user != null) return null;
+        if (loginUser != null) return null;
         log.info("login check fail");
         return ResponseEntity.created(URI.create("/users/login")).build();
+    }
+
+    public void save(ApplyDto dto) {
+        Apply entity = new Apply(dto);
+        recvRepository.save(entity);
     }
 }

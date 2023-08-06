@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface ReceiverRepository extends JpaRepository<Apply, Long> {
     List<Apply> findAll();
+    List<Apply> findByUserId(Long userId);
     Apply findByApplyId(Long applyId);
+
 }

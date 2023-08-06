@@ -2,9 +2,7 @@ package Ajoulion_backend.project.Reciever.Controller;
 
 import Ajoulion_backend.project.Reciever.Service.ReceiverService;
 import Ajoulion_backend.project.Table.DTO.ApplyDto;
-import Ajoulion_backend.project.Table.DTO.DeviceDto;
 import Ajoulion_backend.project.Table.DTO.UsersDto;
-import Ajoulion_backend.project.Table.Entity.Device;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,37 +12,38 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
-public class ReceiverController {
+public class ApplyController {
 
     private final ReceiverService recvService;
 
-    @GetMapping("/receivers")
+    @GetMapping("/applylist")
     public ResponseEntity<List<ApplyDto>> getApplyList(HttpServletRequest request){
         ResponseEntity re = recvService.logincheck(request);
         if (re != null) return re;
 
         log.info("in getApplyList");
-        List<ApplyDto> applyDtoList = recvService.getApplyList();
+        List<ApplyDto> applyDtoList = recvService.getApplyListForUser(recvService.loginUser.getUserId());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(applyDtoList);
     }
 
-    @GetMapping("/receivers/{applyId}")
-    public ResponseEntity<Map<String, Object>> Apply(@PathVariable(name="applyId") Long applyId, HttpServletRequest request){
+    @PostMapping("/apply")
+    public ResponseEntity Apply(@RequestBody ApplyDto applyDto, HttpServletRequest request) {
         ResponseEntity re = recvService.logincheck(request);
         if (re != null) return re;
 
-        log.info("in read all");
-        ApplyDto applyDto = recvService.getApplyInfo(applyId);
-        UsersDto userDto = recvService.getUserInfo(applyDto.getUserId());
-        Map<String, Object> ret = new HashMap<>();
-        ret.put("apply", applyDto);
-        ret.put("users", userDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ret);
+        applyDto.setUserId(recvService.loginUser.getUserId());
+
+        log.info(applyDto.toString());
+        recvService.save(applyDto);
+        return ResponseEntity.created(URI.create("/applylist")).build();
     }
+
 }
