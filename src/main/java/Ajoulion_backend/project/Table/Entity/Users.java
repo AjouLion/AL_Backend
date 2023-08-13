@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +25,15 @@ public class Users {
     private String password;
     @Column(length = 300)
     private String profile;
+    @Column(length = 300)
+    private String certification;
+    private Integer category;
+
+    @OneToMany(mappedBy = "user")
+    private List<Apply> apply = new ArrayList<Apply>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Device> device = new ArrayList<Device>();
 
     public Users(UsersDto dto) {
         userId = dto.getUserId();
@@ -30,6 +41,8 @@ public class Users {
         id = dto.getId();
         password = dto.getPassword();
         profile = dto.getProfile();
+        certification = dto.getCertification();
+        category = dto.getCategory();
     }
 
 }

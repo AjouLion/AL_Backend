@@ -10,7 +10,7 @@ public class DeviceDto {
     private Long deviceId;
     private Long userId;
     private Long applyId;
-    private Integer deviceType;
+    private String deviceType;
     private String model;
     private String date;
     private Integer conditions;
@@ -20,8 +20,8 @@ public class DeviceDto {
 
     public DeviceDto(Device entity) {
         deviceId = entity.getDeviceId();
-        userId = entity.getUserId();
-        applyId = entity.getApplyId();
+        userId = entity.getUser().getUserId();
+        applyId = entity.getApply().getApplyId();
         deviceType = entity.getDeviceType();
         model = entity.getModel();
         date = entity.getDate();
@@ -31,5 +31,3 @@ public class DeviceDto {
         usedDate = entity.getUsedDate();
     }
 }
-
-

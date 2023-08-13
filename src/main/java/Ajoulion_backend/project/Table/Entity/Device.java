@@ -15,9 +15,16 @@ import javax.persistence.*;
 public class Device {
     @Id@GeneratedValue
     private Long deviceId;
-    private Long userId;
-    private Long applyId;
-    private Integer deviceType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userId")
+    private Users user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="applyId")
+    private Apply apply;
+
+    private String deviceType;
     @Column(length = 50)
     private String model;
     @Column(length = 20)
@@ -31,8 +38,8 @@ public class Device {
 
     public Device(DeviceDto dto) {
         deviceId = dto.getDeviceId();
-        userId = dto.getUserId();
-        applyId = dto.getApplyId();
+        user.setUserId(dto.getUserId());
+        apply.setApplyId(dto.getApplyId());
         deviceType = dto.getDeviceType();
         model = dto.getModel();
         date = dto.getDate();

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DeviceRepository extends JpaRepository<Device, Long> {
-    List<Device> findByUserId(Long userId);
-    List<Device> findByUserIdAndStatusNot(Long userId, Integer key);
-    Device findByUserIdAndDeviceId(Long userId, Long DeviceId);
+    List<Device> findByUser_UserIdOrderByDeviceIdDesc(Long userId);
+    List<Device> findByUser_UserIdAndStatusNotOrderByDeviceIdDesc(Long userId, Integer key);
+    Device findByUser_UserIdAndDeviceId(Long userId, Long DeviceId);
     Device findByDeviceId(Long deviceId);
 }

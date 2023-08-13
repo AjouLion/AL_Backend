@@ -1,12 +1,8 @@
 package Ajoulion_backend.project.Donator.Service;
 
 import Ajoulion_backend.project.Donator.Repository.DeviceRepository;
-import Ajoulion_backend.project.Reciever.Repository.ReceiverRepository;
-import Ajoulion_backend.project.Table.DTO.ApplyDto;
 import Ajoulion_backend.project.Table.DTO.DeviceDto;
-import Ajoulion_backend.project.Table.Entity.Apply;
 import Ajoulion_backend.project.Table.Entity.Device;
-import Ajoulion_backend.project.Users.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,9 +21,9 @@ public class DeviceService {
 
     public List<DeviceDto> getDonateList(Long userId) {
 
-        List<Device> applyList = deviceRepository.findByUserIdAndStatusNot(userId, 1);
+        List<Device> list = deviceRepository.findByUser_UserIdAndStatusNotOrderByDeviceIdDesc(userId, 1);
         List<DeviceDto> deviceDtoList = new ArrayList<>();
-        for (Device device : applyList) {
+        for (Device device : list) {
             deviceDtoList.add(new DeviceDto(device));
         }
         return deviceDtoList;
@@ -36,16 +31,16 @@ public class DeviceService {
 
     public List<DeviceDto> getDeviceList(Long userId) {
 
-        List<Device> applyList = deviceRepository.findByUserId(userId);
+        List<Device> list = deviceRepository.findByUser_UserIdOrderByDeviceIdDesc(userId);
         List<DeviceDto> deviceDtoList = new ArrayList<>();
-        for (Device device : applyList) {
+        for (Device device : list) {
             deviceDtoList.add(new DeviceDto(device));
         }
         return deviceDtoList;
     }
 
     public DeviceDto getDeviceInfo(Long userId, Long deviceId) {
-        Device device = deviceRepository.findByUserIdAndDeviceId(userId, deviceId);
+        Device device = deviceRepository.findByUser_UserIdAndDeviceId(userId, deviceId);
         return (new DeviceDto(device));
     }
 

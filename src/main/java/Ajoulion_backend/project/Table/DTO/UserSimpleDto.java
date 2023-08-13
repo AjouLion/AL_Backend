@@ -7,22 +7,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor()
-public class UsersDto {
+public class UserSimpleDto {
     private Long userId;
-    private String name;
     private String id;
-    private String password;
+    private String name;
     private String profile;
-    private String certification;
     private Integer category;
 
-    public UsersDto(Users entity) {
+    public UserSimpleDto(Users entity) {
         userId = entity.getUserId();
-        name = entity.getName();
         id = entity.getId();
-        password = entity.getPassword();
+        name = entity.getName();
         profile = entity.getProfile();
-        certification = entity.getCertification();
         category = entity.getCategory();
     }
 }
