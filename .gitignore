@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+application.properties
+.env
+
+>>>>>>> 842ffb6ba83c6831df3d98f854f6a7b444216257
 HELP.md
 .gradle
 build/
@@ -33,6 +39,7 @@ out/
 /nbdist/
 /.nb-gradle/
 
+<<<<<<< HEAD
 ### VS Code ### 
 .vscode/
 
@@ -40,3 +47,12 @@ src/main/resources/application.properties
 
 .github
 .env
+=======
+### VS Code ###
+.vscode/
+
+src/main/resources/application.properties
+src/test/resources/application.properties
+
+.github
+>>>>>>> 842ffb6ba83c6831df3d98f854f6a7b444216257
