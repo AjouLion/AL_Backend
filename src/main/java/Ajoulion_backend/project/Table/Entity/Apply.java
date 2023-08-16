@@ -37,7 +37,8 @@ public class Apply {
     @Column(length = 20)
     private String date;
     private Integer status;
-    private Integer deliverNum;
+    @Column(length = 50)
+    private String deliverNum;
     @Column(length = 50)
     private String deliverCorp;
 

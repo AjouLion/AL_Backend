@@ -22,28 +22,28 @@ public class DeliveredController {
     private final UserService userService;
 
     @PatchMapping("/apply/complete/{applyId}")
-    public ResponseEntity<?> updateStatus4(@RequestHeader HttpHeaders header, @PathVariable(name="applyId") Long applyId) throws Exception {
+    public ResponseEntity<?> deliveryComplete(@RequestHeader HttpHeaders header, @PathVariable(name="applyId") Long applyId) throws Exception {
         Long userId = userService.loginCheck(header);
 
-        deliveredservice.edit(applyId);
+        deliveredservice.deliveryComplete(applyId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
     }
 
 
     @PatchMapping("/donatelist/{deviceId}")
-    public ResponseEntity<?> updateStatus3(@RequestHeader HttpHeaders header, @PathVariable(name="deviceId") Long deviceId, @RequestBody ApplyDto applyDto) throws Exception {
+    public ResponseEntity<?> updateDeliveryInfo(@RequestHeader HttpHeaders header, @PathVariable(name="deviceId") Long deviceId, @RequestBody ApplyDto applyDto) throws Exception {
         Long userId = userService.loginCheck(header);
 
-        deliveredservice.edit2(deviceId, applyDto.getDeliverNum(), applyDto.getDeliverCorp());
+        deliveredservice.updateDeliveryInfo(deviceId, applyDto.getDeliverNum(), applyDto.getDeliverCorp());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
     }
 
 
     @PatchMapping("/receiver/{applyId}/{deviceId}")
-    public ResponseEntity<?> updateStatus2(@RequestHeader HttpHeaders header, @PathVariable(name="applyId") Long applyId, @PathVariable(name="deviceId") Long deviceId) throws Exception {
+    public ResponseEntity<?> completeMatching(@RequestHeader HttpHeaders header, @PathVariable(name="applyId") Long applyId, @PathVariable(name="deviceId") Long deviceId) throws Exception {
         Long userId = userService.loginCheck(header);
 
-        deliveredservice.edit3(applyId, deviceId);
+        deliveredservice.completeMatching(applyId, deviceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
     }
 

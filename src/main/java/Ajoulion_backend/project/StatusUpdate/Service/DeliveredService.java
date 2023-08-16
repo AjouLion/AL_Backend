@@ -23,40 +23,40 @@ public class DeliveredService {
     private final DeviceStatusRepository deviceStatusRepository;
 
     @Transactional
-    public void edit(Long applyId){
-        Apply entity = applyStatusRepository.findByApplyId(applyId);
-        entity.setStatus(4);
-        Device entity2 = deviceStatusRepository.findByDeviceId(entity.getDevice().getDeviceId());
-        entity2.setStatus(4);
-        applyStatusRepository.save(entity);
-        deviceStatusRepository.save(entity2);
+    public void deliveryComplete(Long applyId){
+        Apply apply = applyStatusRepository.findByApplyId(applyId);
+        Device device = deviceStatusRepository.findByDeviceId(apply.getDevice().getDeviceId());
+        apply.setStatus(4);
+        device.setStatus(4);
+        applyStatusRepository.save(apply);
+        deviceStatusRepository.save(device);
 
     }
 
     @Transactional
-    public void edit2(Long deviceId, Integer deliverNum, String deliverCom){
-        Device entity = deviceStatusRepository.findByDeviceId(deviceId);
-        entity.setStatus(3);
-        Apply entity2 = applyStatusRepository.findByApplyId(entity.getApply().getApplyId());
-        entity2.setStatus(3);
-        entity2.setDeliverNum(deliverNum);
-        entity2.setDeliverCorp(deliverCom);
-        applyStatusRepository.save(entity2);
-        deviceStatusRepository.save(entity);
+    public void updateDeliveryInfo(Long deviceId, String deliverNum, String deliverCorp){
+        Device device = deviceStatusRepository.findByDeviceId(deviceId);
+        Apply apply = applyStatusRepository.findByApplyId(device.getApply().getApplyId());
+        device.setStatus(3);
+        apply.setStatus(3);
+        apply.setDeliverNum(deliverNum);
+        apply.setDeliverCorp(deliverCorp);
+        applyStatusRepository.save(apply);
+        deviceStatusRepository.save(device);
 
     }
 
 
     @Transactional
-    public void edit3(Long applyId, Long deviceId){
-        Device entity = deviceStatusRepository.findByDeviceId(deviceId);
-        entity.getApply().setApplyId(applyId);
-        entity.setStatus(2);
-        Apply entity2 = applyStatusRepository.findByApplyId(applyId);
-        entity2.getDevice().setDeviceId(deviceId);
-        entity2.setStatus(2);
-        applyStatusRepository.save(entity2);
-        deviceStatusRepository.save(entity);
+    public void completeMatching(Long applyId, Long deviceId){
+        Device device = deviceStatusRepository.findByDeviceId(deviceId);
+        Apply apply = applyStatusRepository.findByApplyId(applyId);
+        device.setApply(apply);
+        device.setStatus(2);
+        apply.setDevice(device);
+        apply.setStatus(2);
+        applyStatusRepository.save(apply);
+        deviceStatusRepository.save(device);
 
     }
 }

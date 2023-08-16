@@ -15,7 +15,7 @@ public class ApplyDto {
     private String content;
     private String date;
     private Integer status;
-    private Integer deliverNum;
+    private String deliverNum;
     private String deliverCorp;
 
     public ApplyDto(Apply entity) {
