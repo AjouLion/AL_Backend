@@ -21,7 +21,7 @@ public class ApplyDto {
     public ApplyDto(Apply entity) {
         applyId = entity.getApplyId();
         userId = entity.getUser().getUserId();
-        deviceId = (entity.getDevice() != null) ? entity.getDevice().getDeviceId() : null;
+        deviceId = (entity.getDevice() != null) ? entity.getDevice().getDeviceId() : 0;
         deviceType = entity.getDeviceType();
         address = entity.getAddress();
         content = entity.getContent();

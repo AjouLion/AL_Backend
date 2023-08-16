@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor()
-@Table(name= "Device")
+@Table(name= "Device", indexes = @Index(name = "idx_deviceType", columnList = "deviceType"))
 public class Device {
     @Id@GeneratedValue
     private Long deviceId;
@@ -23,7 +23,7 @@ public class Device {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="applyId")
     private Apply apply;
-
+    @Column(length = 20)
     private String deviceType;
     @Column(length = 50)
     private String model;
@@ -37,9 +37,18 @@ public class Device {
     private String usedDate;
 
     public Device(DeviceDto dto) {
+
+        if (dto.getUserId() != null) { // applyId가 null이 아닌 경우에만 applyId를 설정
+            user = new Users();
+            user.setUserId(dto.getUserId());
+        }
+
+        if (dto.getApplyId() != null) { // applyId가 null이 아닌 경우에만 applyId를 설정
+            apply = new Apply();
+            apply.setApplyId(dto.getApplyId());
+        }
+
         deviceId = dto.getDeviceId();
-        user.setUserId(dto.getUserId());
-        apply.setApplyId(dto.getApplyId());
         deviceType = dto.getDeviceType();
         model = dto.getModel();
         date = dto.getDate();

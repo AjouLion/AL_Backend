@@ -21,7 +21,7 @@ public class ReceiverController {
     private final ReceiverService recvService;
     private final UserService userService;
 
-    @GetMapping("/receivers")
+    @GetMapping("/receiver")
     public ResponseEntity<List<Map<String, Object>>> getApplyList(@RequestHeader HttpHeaders header) {
         Long userId = userService.loginCheck(header);
 

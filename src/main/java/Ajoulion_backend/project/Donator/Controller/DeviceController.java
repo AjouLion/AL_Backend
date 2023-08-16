@@ -2,6 +2,7 @@ package Ajoulion_backend.project.Donator.Controller;
 
 import Ajoulion_backend.project.Donator.Service.DeviceService;
 import Ajoulion_backend.project.Table.DTO.DeviceDto;
+import Ajoulion_backend.project.Table.Entity.Device;
 import Ajoulion_backend.project.Users.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,6 @@ public class DeviceController {
         deviceDto.setUserId(userId);
         deviceDto.setStatus(1);
         deviceDto.setDate(now.toString());
-
         log.info(deviceDto.toString());
         deviceService.save(deviceDto);
         return ResponseEntity.created(URI.create("/device")).build();
@@ -69,7 +69,7 @@ public class DeviceController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
     }
 
-    @DeleteMapping("/device/{device_id}/delete")
+    @DeleteMapping("/device/{deviceId}/delete")
     public ResponseEntity<?> deleteByDeviceId(@RequestHeader HttpHeaders header, @PathVariable(name="deviceId") Long deviceId) throws Exception {
         Long userId = userService.loginCheck(header);
 

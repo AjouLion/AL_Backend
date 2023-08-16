@@ -21,7 +21,7 @@ public class DeviceDto {
     public DeviceDto(Device entity) {
         deviceId = entity.getDeviceId();
         userId = entity.getUser().getUserId();
-        applyId = entity.getApply().getApplyId();
+        applyId = (entity.getApply() != null) ? entity.getApply().getApplyId() : 0;
         deviceType = entity.getDeviceType();
         model = entity.getModel();
         date = entity.getDate();

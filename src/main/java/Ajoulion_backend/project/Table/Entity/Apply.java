@@ -42,9 +42,18 @@ public class Apply {
     private String deliverCorp;
 
     public Apply(ApplyDto dto) {
+
+        if (dto.getUserId() != null) { // applyId가 null이 아닌 경우에만 applyId를 설정
+            user = new Users();
+            user.setUserId(dto.getUserId());
+        }
+
+        if (dto.getDeviceId() != null) { // applyId가 null이 아닌 경우에만 applyId를 설정
+            device = new Device();
+            device.setDeviceId(dto.getDeviceId());
+        }
+
         applyId = dto.getApplyId();
-        user.setUserId(dto.getUserId());
-        device.setDeviceId(dto.getDeviceId());
         deviceType = dto.getDeviceType();
         address = dto.getAddress();
         content = dto.getContent();
