@@ -17,7 +17,7 @@ public class Device {
     private Long deviceId;
     private Long userId;
     private Long applyId;
-    private Integer deviceType;
+    private String deviceType;
     @Column(length = 50)
     private String model;
     @Column(length = 20)

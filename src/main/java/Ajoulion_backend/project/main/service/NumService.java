@@ -18,15 +18,15 @@ public class NumService {
     }
 
     public long getTabletNum(){
-        return numRepository.countByStatusAndDeviceType(4, 1);
+        return numRepository.countByStatusAndDeviceType(4, "태블릿");
     }
 
     public long getSmartphoneNum(){
-        return numRepository.countByStatusAndDeviceType(4, 2);
+        return numRepository.countByStatusAndDeviceType(4, "휴대폰");
     }
 
     public long getLabtopNum(){
-        return numRepository.countByStatusAndDeviceType(4, 3);
+        return numRepository.countByStatusAndDeviceType(4, "노트북");
     }
 
 

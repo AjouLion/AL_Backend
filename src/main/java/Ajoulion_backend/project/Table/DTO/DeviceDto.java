@@ -10,7 +10,7 @@ public class DeviceDto {
     private Long deviceId;
     private Long userId;
     private Long applyId;
-    private Integer deviceType;
+    private String deviceType;
     private String model;
     private String date;
     private Integer conditions;

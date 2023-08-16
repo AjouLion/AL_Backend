@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NumRepository extends CrudRepository<Device, Long> {
     long countByStatus(Integer status);
-    long countByStatusAndDeviceType(Integer status, Integer deviceType);
+    long countByStatusAndDeviceType(Integer status, String deviceType);
 }
