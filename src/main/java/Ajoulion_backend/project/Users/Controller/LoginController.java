@@ -30,7 +30,7 @@ public class LoginController {
     private final JwtProvider jwtProvider;
 
     @PostMapping("/join/donator")
-    public ResponseEntity<?> donatorJoin(@PathVariable(name="user") UsersDto userDto,
+    public ResponseEntity<?> donatorJoin(@RequestPart(name="user") UsersDto userDto,
                                          @RequestPart(name="profile") MultipartFile profileImage,
                                          @RequestPart(name="certification") MultipartFile certificationImage) {
         userService.join(0, userDto, profileImage, certificationImage); // 0 : 기부자
@@ -38,7 +38,7 @@ public class LoginController {
     }
 
     @PostMapping("/join/receiver")
-    public ResponseEntity<?> receiverJoin(@PathVariable(name="user") UsersDto userDto,
+    public ResponseEntity<?> receiverJoin(@RequestPart(name="user") UsersDto userDto,
                                           @RequestPart(name="profile") MultipartFile profileImage,
                                           @RequestPart(name="certification") MultipartFile certificationImage) {
         userService.join(1, userDto, profileImage, certificationImage); // 1 : 수혜자
