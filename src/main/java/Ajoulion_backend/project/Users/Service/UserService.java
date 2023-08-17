@@ -65,6 +65,16 @@ public class UserService {
     public void delete(Long userId) {
         userRepository.deleteByUserId(userId);
     }
+
+    public void update(Long userId, UsersDto usersDto) {
+        Users user = userRepository.findByUserId(userId);
+        user.setName(usersDto.getName());
+        user.setId(usersDto.getId());
+        user.setPassword(usersDto.getPassword());
+        user.setProfile(usersDto.getProfile());
+        user.setCertification(usersDto.getCertification());
+        userRepository.save(user);
+    }
 }
 
 

@@ -90,9 +90,12 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 
-//    @PatchMapping("/update")
-//    public ResponseEntity<MemberDto> updateMemberDto(@PathVariable Long memberId, @RequestBody UpdateDto Dto) {
-//        MemberDto update = memberService.update(memberId, Dto);
-//        return ResponseEntity.status(HttpStatus.OK).body(update);
-//    }
+    @PatchMapping("/update")
+    public ResponseEntity update(@RequestHeader HttpHeaders header, @RequestBody UsersDto usersDto) throws Exception {
+        Long userId = userService.loginCheck(header);
+
+        userService.update(userId, usersDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
+    }
 }
+
