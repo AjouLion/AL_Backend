@@ -12,6 +12,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         String dir = System.getProperty("user.dir");
         String file = (dir.indexOf('\\') > 0) ? "file:///" : "file:";
         registry.addResourceHandler("/image/**")
-                .addResourceLocations(file + ImageUpload.getImageDir());
+                .addResourceLocations(file + ImageUpload.getImageDir() + "image/");
     }
 }
