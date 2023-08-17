@@ -15,6 +15,7 @@ import java.util.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/")
 public class ReceiverController {
 
