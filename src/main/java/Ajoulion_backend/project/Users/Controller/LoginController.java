@@ -31,14 +31,14 @@ public class LoginController {
 
     @PostMapping("/join/donator")
     public ResponseEntity<?> donatorJoin(@RequestPart(name="user") UsersDto userDto,
-                                         @RequestPart(name="profile") MultipartFile profileImage) {
+                                         @RequestPart(name="profile", required = false) MultipartFile profileImage) {
         userService.join(0, userDto, profileImage, null); // 0 : 기부자
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
     @PostMapping("/join/receiver")
     public ResponseEntity<?> receiverJoin(@RequestPart(name="user") UsersDto userDto,
-                                          @RequestPart(name="profile") MultipartFile profileImage,
+                                          @RequestPart(name="profile", required = false) MultipartFile profileImage,
                                           @RequestPart(name="certification") MultipartFile certificationImage) {
         userService.join(1, userDto, profileImage, certificationImage); // 1 : 수혜자
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
