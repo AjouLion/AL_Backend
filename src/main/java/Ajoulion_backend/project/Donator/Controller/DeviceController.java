@@ -54,7 +54,7 @@ public class DeviceController {
 
     @PostMapping("/device/post")
     public ResponseEntity devicePost(@RequestHeader HttpHeaders header,
-                                     @PathVariable(name="device") DeviceDto deviceDto,
+                                     @RequestPart(name="device") DeviceDto deviceDto,
                                      @RequestPart(name="image") MultipartFile deviceImage) throws Exception {
         Long userId = userService.loginCheck(header);
         deviceDto.setUserId(userId);
@@ -69,7 +69,7 @@ public class DeviceController {
 
     @PatchMapping("/device/{deviceId}/update/image")
     public ResponseEntity<?> uploadDeviceImage(@RequestHeader HttpHeaders header,
-                                               @PathVariable(name="deviceId") Long deviceId,
+                                               @RequestPart(name="deviceId") Long deviceId,
                                                @RequestPart(name="image") MultipartFile deviceImage) {
         Long userId = userService.loginCheck(header);
 

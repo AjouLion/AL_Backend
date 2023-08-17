@@ -16,6 +16,7 @@ public class ImageUpload {
     private static String deviceImageDir = "image/device/";
 
     public static String joinPath(String path1, String path2) {
+        if (path2 == null || path2.isEmpty()) return path1;
         if (path1.charAt(path1.length() - 1) == '/') return path1 + path2;
         return path1 + "/" + path2;
     }

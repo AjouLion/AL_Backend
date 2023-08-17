@@ -82,7 +82,6 @@ public class DeviceService {
     public void update(Long deviceId, DeviceDto deviceDto) {
         Device device = getDevice(deviceId);
         device.setDeviceType(deviceDto.getDeviceType());
-        device.setDate(deviceDto.getDate());
         device.setModel(deviceDto.getModel());
         device.setConditions(deviceDto.getConditions());
         device.setUsedDate(deviceDto.getUsedDate());
