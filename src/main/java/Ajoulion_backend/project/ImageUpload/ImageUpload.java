@@ -16,12 +16,13 @@ import java.io.IOException;
 public class ImageUpload {
 
     private static String imageDir = null;
-    private static final String profileImageDir = "profile/";
-    private static final String certificationImageDir = "certification/";
-    private static final String deviceImageDir = "device/";
+    private static final String profileImageDir = "image/profile/";
+    private static final String certificationImageDir = "image/certification/";
+    private static final String deviceImageDir = "image/device/";
 
     @Value("${file.upload.directory}")
     public void SetImageDir(String value) {
+        if (value.charAt(value.length() - 1) != '/') value += "/";
         imageDir = value;
         log.info("SetImageDir.imageDir="+imageDir);
     }
