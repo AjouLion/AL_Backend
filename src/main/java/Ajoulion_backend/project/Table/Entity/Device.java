@@ -27,7 +27,7 @@ public class Device {
     private String deviceType;
     @Column(length = 50)
     private String model;
-    @Column(length = 20)
+    @Column(length = 50)
     private String date;
     private Integer conditions;
     @Column(length = 300)

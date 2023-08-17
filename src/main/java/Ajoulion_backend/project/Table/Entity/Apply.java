@@ -34,7 +34,7 @@ public class Apply {
     private String address;
     @Column(length = 1000)
     private String content;
-    @Column(length = 20)
+    @Column(length = 50)
     private String date;
     private Integer status;
     @Column(length = 50)

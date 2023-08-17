@@ -30,7 +30,6 @@ public class DeliveredService {
         device.setStatus(4);
         applyStatusRepository.save(apply);
         deviceStatusRepository.save(device);
-
     }
 
     @Transactional
@@ -43,7 +42,6 @@ public class DeliveredService {
         apply.setDeliverCorp(deliverCorp);
         applyStatusRepository.save(apply);
         deviceStatusRepository.save(device);
-
     }
 
 
@@ -57,6 +55,5 @@ public class DeliveredService {
         apply.setStatus(2);
         applyStatusRepository.save(apply);
         deviceStatusRepository.save(device);
-
     }
 }
