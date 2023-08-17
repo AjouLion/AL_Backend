@@ -54,6 +54,7 @@ public class UserService {
 
     @Transactional
     public void uploadProfileImage(Long userId, MultipartFile profileImage) throws CustomException {
+        if (profileImage == null) return;
         Users user = getUser(userId);
         String filename = ImageUpload.uploadProfileImage(user.getUserId(), profileImage);
         if (filename == null) {
@@ -65,6 +66,7 @@ public class UserService {
 
     @Transactional
     public void uploadCertificationImage(Long userId, MultipartFile certificationImage) throws CustomException {
+        if (certificationImage == null) return;
         Users user = getUser(userId);
         String filename = ImageUpload.uploadCertificationImage(user.getUserId(), certificationImage);
         if (filename == null) {

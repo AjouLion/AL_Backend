@@ -63,6 +63,7 @@ public class DeviceService {
 
     @Transactional
     public void uploadDeviceImage(Long deviceId, MultipartFile deviceImage) {
+        if (deviceImage == null) return;
         Device device = getDevice(deviceId);
         String filename = ImageUpload.uploadDeviceImage(device.getDeviceId(), deviceImage);
         if (filename == null) {

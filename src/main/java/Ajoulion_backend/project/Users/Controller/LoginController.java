@@ -31,9 +31,8 @@ public class LoginController {
 
     @PostMapping("/join/donator")
     public ResponseEntity<?> donatorJoin(@RequestPart(name="user") UsersDto userDto,
-                                         @RequestPart(name="profile") MultipartFile profileImage,
-                                         @RequestPart(name="certification") MultipartFile certificationImage) {
-        userService.join(0, userDto, profileImage, certificationImage); // 0 : 기부자
+                                         @RequestPart(name="profile") MultipartFile profileImage) {
+        userService.join(0, userDto, profileImage, null); // 0 : 기부자
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
