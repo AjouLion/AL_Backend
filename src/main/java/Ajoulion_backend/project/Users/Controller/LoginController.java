@@ -20,6 +20,7 @@ import static Ajoulion_backend.project.Error.ErrorCode.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/users")
 public class LoginController {
 

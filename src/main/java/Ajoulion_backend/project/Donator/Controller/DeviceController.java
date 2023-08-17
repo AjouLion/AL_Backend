@@ -18,6 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/")
 public class DeviceController {
     private final DeviceService deviceService;
