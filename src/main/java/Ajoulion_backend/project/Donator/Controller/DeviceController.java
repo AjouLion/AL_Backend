@@ -1,6 +1,7 @@
 package Ajoulion_backend.project.Donator.Controller;
 
 import Ajoulion_backend.project.Donator.Service.DeviceService;
+import Ajoulion_backend.project.ImageUpload.ImageUpload;
 import Ajoulion_backend.project.Table.DTO.DeviceDto;
 import Ajoulion_backend.project.Table.Entity.Device;
 import Ajoulion_backend.project.Users.Service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.Date;
@@ -51,15 +53,28 @@ public class DeviceController {
     }
 
     @PostMapping("/device/post")
-    public ResponseEntity devicePost(@RequestHeader HttpHeaders header, @RequestBody DeviceDto deviceDto) throws Exception {
+    public ResponseEntity devicePost(@RequestHeader HttpHeaders header,
+                                     @PathVariable(name="device") DeviceDto deviceDto,
+                                     @RequestPart(name="image") MultipartFile deviceImage) throws Exception {
         Long userId = userService.loginCheck(header);
-        Date now = new Date();
         deviceDto.setUserId(userId);
+        deviceDto.setDate(new Date().toString());
+        deviceDto.setImage(null);
         deviceDto.setStatus(1);
-        deviceDto.setDate(now.toString());
         log.info(deviceDto.toString());
-        deviceService.save(deviceDto);
+        Long deviceId = deviceService.save(deviceDto);
+        deviceService.uploadDeviceImage(deviceId, deviceImage);
         return ResponseEntity.created(URI.create("/device")).build();
+    }
+
+    @PatchMapping("/device/{deviceId}/update/image")
+    public ResponseEntity<?> uploadDeviceImage(@RequestHeader HttpHeaders header,
+                                               @PathVariable(name="deviceId") Long deviceId,
+                                               @RequestPart(name="image") MultipartFile deviceImage) {
+        Long userId = userService.loginCheck(header);
+
+        deviceService.uploadDeviceImage(deviceId, deviceImage);
+        return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
     @PatchMapping("/device/{deviceId}/update")

@@ -1,5 +1,6 @@
 package Ajoulion_backend.project.Table.DTO;
 
+import Ajoulion_backend.project.ImageUpload.ImageUpload;
 import Ajoulion_backend.project.Table.Entity.Users;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,8 @@ public class UsersDto {
         name = entity.getName();
         id = entity.getId();
         password = entity.getPassword();
-        profile = entity.getProfile();
-        certification = entity.getCertification();
+        profile = ImageUpload.getProfilePath(userId, entity.getProfile());
+        certification = ImageUpload.getCertificationPath(userId, entity.getCertification());
         category = entity.getCategory();
     }
 }
