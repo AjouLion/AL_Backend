@@ -3,17 +3,26 @@ package Ajoulion_backend.project.Donator.Service;
 import Ajoulion_backend.project.Donator.Repository.DeviceRepository;
 import Ajoulion_backend.project.Error.CustomException;
 import Ajoulion_backend.project.ImageUpload.ImageUpload;
+import Ajoulion_backend.project.Reciever.Repository.ReceiverRepository;
+import Ajoulion_backend.project.Table.DTO.ApplyDto;
 import Ajoulion_backend.project.Table.DTO.DeviceDto;
+import Ajoulion_backend.project.Table.DTO.UserSimpleDto;
+import Ajoulion_backend.project.Table.Entity.Apply;
 import Ajoulion_backend.project.Table.Entity.Device;
+import Ajoulion_backend.project.Table.Entity.Users;
+import Ajoulion_backend.project.Users.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static Ajoulion_backend.project.Error.ErrorCode.*;
 
@@ -24,15 +33,24 @@ import static Ajoulion_backend.project.Error.ErrorCode.*;
 public class DeviceService {
 
     private final DeviceRepository deviceRepository;
+    private final ReceiverRepository receiverRepository;
+    private final UserRepository userRepository;
 
-    public List<DeviceDto> getDonateList(Long userId) {
+    public List<Map<String, Object>> getDonateList(Long userId) {
 
         List<Device> list = deviceRepository.findByUser_UserIdAndStatusNotOrderByDeviceIdDesc(userId, 1);
-        List<DeviceDto> deviceDtoList = new ArrayList<>();
+        List<Map<String, Object>> map = new ArrayList<>();
+
         for (Device device : list) {
-            deviceDtoList.add(new DeviceDto(device));
+            Map<String, Object> ret = new HashMap<>();
+            Apply apply = receiverRepository.findByApplyId(device.getApply().getApplyId());
+            Users user = userRepository.findByUserId(apply.getUser().getUserId());
+            ret.put("device", new DeviceDto(device));
+            ret.put("apply", new ApplyDto(apply));
+            ret.put("user", new UserSimpleDto(user));
+            map.add(ret);
         }
-        return deviceDtoList;
+        return map;
     }
 
     public List<DeviceDto> getDeviceList(Long userId) {
