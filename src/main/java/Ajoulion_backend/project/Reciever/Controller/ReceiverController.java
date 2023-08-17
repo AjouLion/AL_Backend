@@ -23,7 +23,7 @@ public class ReceiverController {
 
     @GetMapping("/receiver")
     public ResponseEntity<List<Map<String, Object>>> getApplyList(@RequestHeader HttpHeaders header) {
-        Long userId = userService.loginCheck(header);
+//        Long userId = userService.loginCheck(header);
 
         log.info("in getApplyList");
         List<Map<String, Object>> list = recvService.getApplyList();
