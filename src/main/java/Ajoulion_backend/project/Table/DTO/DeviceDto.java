@@ -1,5 +1,6 @@
 package Ajoulion_backend.project.Table.DTO;
 
+import Ajoulion_backend.project.ImageUpload.ImageUpload;
 import Ajoulion_backend.project.Table.Entity.Device;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class DeviceDto {
         model = entity.getModel();
         date = entity.getDate();
         conditions = entity.getConditions();
-        image = entity.getImage();
+        image = ImageUpload.getDevicePath(deviceId, entity.getImage());
         status = entity.getStatus();
         usedDate = entity.getUsedDate();
     }

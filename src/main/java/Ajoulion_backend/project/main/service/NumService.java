@@ -14,19 +14,19 @@ public class NumService {
     private final NumRepository numRepository;
 
     public long getTotalNum(){
-        return numRepository.count();
+        return numRepository.countByStatus(4);
     }
 
     public long getTabletNum(){
-        return numRepository.countByDeviceType("태블릿");
+        return numRepository.countByStatusAndDeviceType(4, "태블릿");
     }
 
     public long getSmartphoneNum(){
-        return numRepository.countByDeviceType("휴대폰");
+        return numRepository.countByStatusAndDeviceType(4, "휴대폰");
     }
 
     public long getLabtopNum(){
-        return numRepository.countByDeviceType("노트북");
+        return numRepository.countByStatusAndDeviceType(4, "노트북");
     }
 
 

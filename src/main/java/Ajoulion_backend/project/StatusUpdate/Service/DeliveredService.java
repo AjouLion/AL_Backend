@@ -28,8 +28,6 @@ public class DeliveredService {
         Device device = deviceStatusRepository.findByDeviceId(apply.getDevice().getDeviceId());
         apply.setStatus(4);
         device.setStatus(4);
-        applyStatusRepository.save(apply);
-        deviceStatusRepository.save(device);
     }
 
     @Transactional
@@ -40,8 +38,6 @@ public class DeliveredService {
         apply.setStatus(3);
         apply.setDeliverNum(deliverNum);
         apply.setDeliverCorp(deliverCorp);
-//        applyStatusRepository.save(apply);
-//        deviceStatusRepository.save(device);
     }
 
 
@@ -53,7 +49,5 @@ public class DeliveredService {
         device.setStatus(2);
         apply.setDevice(device);
         apply.setStatus(2);
-        applyStatusRepository.save(apply);
-        deviceStatusRepository.save(device);
     }
 }

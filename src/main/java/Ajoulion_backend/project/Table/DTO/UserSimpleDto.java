@@ -1,5 +1,6 @@
 package Ajoulion_backend.project.Table.DTO;
 
+import Ajoulion_backend.project.ImageUpload.ImageUpload;
 import Ajoulion_backend.project.Table.Entity.Users;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class UserSimpleDto {
         userId = entity.getUserId();
         id = entity.getId();
         name = entity.getName();
-        profile = entity.getProfile();
+        profile = ImageUpload.getProfilePath(userId, entity.getProfile());
         category = entity.getCategory();
     }
 }

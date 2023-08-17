@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NumRepository extends JpaRepository<Device, Long> {
-    long count();
-    long countByDeviceType(String deviceType);
+    long countByStatus(Integer status);
+    long countByStatusAndDeviceType(Integer status, String deviceType);
 }

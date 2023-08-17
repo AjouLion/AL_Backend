@@ -6,6 +6,7 @@ import Ajoulion_backend.project.JWT.JwtProvider;
 import Ajoulion_backend.project.JWT.TokenResponse;
 import Ajoulion_backend.project.Table.DTO.UserSimpleDto;
 import Ajoulion_backend.project.Table.DTO.UsersDto;
+import Ajoulion_backend.project.Table.Entity.Users;
 import Ajoulion_backend.project.Users.Service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static Ajoulion_backend.project.Error.ErrorCode.*;
 
@@ -28,16 +30,26 @@ public class LoginController {
     private final JwtProvider jwtProvider;
 
     @PostMapping("/join/donator")
-    public ResponseEntity<?> donatorJoin(@RequestBody UsersDto userDto){
-        userDto.setCategory(0); // 0 : 기부자
-        userService.join(userDto);
+    public ResponseEntity<?> donatorJoin(@PathVariable(name="user") UsersDto userDto,
+                                         @RequestPart(name="profile") MultipartFile profileImage,
+                                         @RequestPart(name="certification") MultipartFile certificationImage) {
+        userService.join(0, userDto, profileImage, certificationImage); // 0 : 기부자
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
     @PostMapping("/join/receiver")
-    public ResponseEntity<?> receiverJoin(@RequestBody UsersDto userDto){
-        userDto.setCategory(1); // 1 : 수혜자
-        userService.join(userDto);
+    public ResponseEntity<?> receiverJoin(@PathVariable(name="user") UsersDto userDto,
+                                          @RequestPart(name="profile") MultipartFile profileImage,
+                                          @RequestPart(name="certification") MultipartFile certificationImage) {
+        userService.join(1, userDto, profileImage, certificationImage); // 1 : 수혜자
+        return ResponseEntity.status(HttpStatus.CREATED).body("success");
+    }
+
+    @PatchMapping("/update/image")
+    public ResponseEntity<?> uploadProfileImage(@RequestHeader HttpHeaders header,
+                                                @RequestPart(name="profile") MultipartFile profileImage) throws Exception {
+        Long userId = userService.loginCheck(header);
+        userService.uploadProfileImage(userId, profileImage);
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
@@ -63,21 +75,6 @@ public class LoginController {
         }
      }
 
-/*
-    public ResponseEntity<UsersDto> login(@RequestBody LoginDto loginDto, HttpServletRequest request) {
-        UsersDto login = userService.login(loginDto);
-        if (login == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("login", login);
-            log.info("login success");
-            log.info(session.toString());
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(login);
-        }
-    }
-*/
-
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader HttpHeaders header) {
         //session.invalidate();
@@ -88,11 +85,11 @@ public class LoginController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestHeader HttpHeaders header){
         Long userId = userService.loginCheck(header);
-        userService.delete(userId);
+        userService.deleteupdate(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/update/info")
     public ResponseEntity update(@RequestHeader HttpHeaders header, @RequestBody UsersDto usersDto) throws Exception {
         Long userId = userService.loginCheck(header);
 
@@ -100,4 +97,3 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Update Success");
     }
 }
-

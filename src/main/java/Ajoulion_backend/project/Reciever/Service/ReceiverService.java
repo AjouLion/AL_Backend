@@ -1,5 +1,6 @@
 package Ajoulion_backend.project.Reciever.Service;
 
+import Ajoulion_backend.project.Error.CustomException;
 import Ajoulion_backend.project.Reciever.Repository.ReceiverRepository;
 import Ajoulion_backend.project.Table.DTO.ApplyDto;
 import Ajoulion_backend.project.Table.DTO.UserSimpleDto;
@@ -15,16 +16,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static Ajoulion_backend.project.Error.ErrorCode.*;
+
 @Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ReceiverService {
     private final ReceiverRepository recvRepository;
-    private final UserRepository userRepository;
 
     public List<Map<String, Object>> getApplyList() {
-        List<Apply> list = recvRepository.findAllByOrderByApplyIdDesc();
+        List<Apply> list = recvRepository.findByStatusOrderByApplyIdDesc(1);
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (Apply apply : list) {
             Map<String, Object> map = new HashMap<>();
@@ -43,25 +45,30 @@ public class ReceiverService {
         }
         return applyDtoList;
     }
-
-    public ApplyDto getApplyInfo(Long userId) {
-        Apply apply = recvRepository.findByApplyId(userId);
-        return (new ApplyDto(apply));
+    public Apply getApply(Long applyId) {
+        Apply apply = recvRepository.findByApplyId(applyId);
+        if (apply == null) {
+            throw new CustomException(ERR_APPLY_NOT_EXIST);
+        }
+        return apply;
     }
 
-    public void save(ApplyDto dto) {
-        Apply entity = new Apply(dto);
-        recvRepository.save(entity);
+    public ApplyDto getApplyInfo(Long applyId) {
+        return new ApplyDto(getApply(applyId));
     }
 
+    public Long save(ApplyDto dto) {
+        Apply apply = new Apply(dto);
+        recvRepository.save(apply);
+        return apply.getApplyId();
+    }
+
+    @Transactional
     public void update(Long applyId, ApplyDto applyDto) {
-        Apply entity = recvRepository.findByApplyId(applyId);
-        entity.setDeviceType(applyDto.getDeviceType());
-        entity.setDate(applyDto.getDate());
-        entity.setAddress(applyDto.getAddress());
-        entity.setContent(applyDto.getContent());
-        entity.setStatus(applyDto.getStatus());
-        recvRepository.save(entity);
+        Apply apply = getApply(applyId);
+        apply.setDeviceType(applyDto.getDeviceType());
+        apply.setAddress(applyDto.getAddress());
+        apply.setContent(applyDto.getContent());
     }
 
     public void deleteByApplyId(Long deviceId) {
