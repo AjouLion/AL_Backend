@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -27,12 +28,12 @@ public class DeviceController {
     private final UserService userService;
 
     @GetMapping("/donatelist")
-    public ResponseEntity<List<DeviceDto>> getDonateList(@RequestHeader HttpHeaders header) {
+    public ResponseEntity<List<Map<String, Object>>> getDonateList(@RequestHeader HttpHeaders header) {
         Long userId = userService.loginCheck(header);
 
         log.info("in deviceList");
-        List<DeviceDto> deviceDtoList = deviceService.getDonateList(userId);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(deviceDtoList);
+        List<Map<String, Object>> map = deviceService.getDonateList(userId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(map);
     }
 
     @GetMapping("/device")
