@@ -40,8 +40,8 @@ public class DeliveredService {
         apply.setStatus(3);
         apply.setDeliverNum(deliverNum);
         apply.setDeliverCorp(deliverCorp);
-        applyStatusRepository.save(apply);
-        deviceStatusRepository.save(device);
+//        applyStatusRepository.save(apply);
+//        deviceStatusRepository.save(device);
     }
 
 

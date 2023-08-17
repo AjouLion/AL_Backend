@@ -12,4 +12,5 @@ public class TokenResponse {
     private String expiredTime;
     private String name;
     private String profile;
+    private Integer category;
 }

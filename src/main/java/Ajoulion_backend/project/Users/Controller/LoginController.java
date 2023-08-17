@@ -55,8 +55,8 @@ public class LoginController {
                     claims.getIssuedAt().toString(),
                     claims.getExpiration().toString(),
                     user.getName(),
-                    user.getProfile());
-                    user.getCategory();
+                    user.getProfile(),
+                    user.getCategory());
             return ResponseEntity.ok().body(tokenResponse);
         } catch(Exception e) {
             throw new CustomException(ERR_AUTHORIZED);
