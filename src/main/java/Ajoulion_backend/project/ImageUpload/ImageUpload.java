@@ -35,7 +35,7 @@ public class ImageUpload {
     }
 
     public static String uploadFile(String subDir, MultipartFile uploadFile) {
-        if (uploadFile.isEmpty()) return null;
+        if (uploadFile == null || uploadFile.isEmpty()) return null;
         String dir = getDir(subDir);
         File file = new File(dir);
         if (!file.exists()) file.mkdirs();
