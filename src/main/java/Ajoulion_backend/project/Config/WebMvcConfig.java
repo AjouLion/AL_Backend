@@ -10,6 +10,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/image/**")
-                .addResourceLocations("/home/ec2-user/AL_Backend/build/libs/image/");
+                .addResourceLocations("file:/home/ec2-user/AL_Backend/build/libs/image/");
     }
 }

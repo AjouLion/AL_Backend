@@ -70,7 +70,7 @@ public class DeviceController {
 
     @PatchMapping("/device/{deviceId}/update/image")
     public ResponseEntity<?> uploadDeviceImage(@RequestHeader HttpHeaders header,
-                                               @RequestPart(name="deviceId") Long deviceId,
+                                               @PathVariable(name="deviceId") Long deviceId,
                                                @RequestPart(name="image") MultipartFile deviceImage) {
         Long userId = userService.loginCheck(header);
 
