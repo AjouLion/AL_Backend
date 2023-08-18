@@ -22,7 +22,7 @@ public class NumService {
     }
 
     public long getSmartphoneNum(){
-        return numRepository.countByStatusAndDeviceType(4, "휴대폰");
+        return numRepository.countByStatusAndDeviceType(4, "스마트폰");
     }
 
     public long getLabtopNum(){
