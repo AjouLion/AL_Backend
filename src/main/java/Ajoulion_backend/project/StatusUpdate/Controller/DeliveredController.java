@@ -14,7 +14,7 @@ import org.springframework.http.HttpHeaders;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://front-server.com")
 @RequestMapping("/")
 public class DeliveredController {
 

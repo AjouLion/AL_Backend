@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public interface ReceiverRepository extends JpaRepository<Apply, Long> {
-    List<Apply> findNotByUser_IdAndStatusOrderByApplyIdDesc(String id, Integer status); // 최신순으로 정렬
+    List<Apply> findByUser_IdNotAndStatusOrderByApplyIdDesc(String id, Integer status); // 최신순으로 정렬
     List<Apply> findByUser_UserIdOrderByApplyIdDesc(Long userId); // 최신순으로 정렬
     Apply findByApplyId(Long applyId);
 }
