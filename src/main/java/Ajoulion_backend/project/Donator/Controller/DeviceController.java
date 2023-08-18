@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://front-server.com")
+@CrossOrigin(origins = "*")
 @RequestMapping("/")
 public class DeviceController {
     private final DeviceService deviceService;
