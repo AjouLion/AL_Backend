@@ -37,11 +37,11 @@ public class DeviceController {
     }
 
     @GetMapping("/device")
-    public ResponseEntity<List<DeviceDto>> getDeviceList(@RequestHeader HttpHeaders header) {
+    public ResponseEntity<List<DeviceDto>> getDeviceList(@RequestHeader HttpHeaders header, @RequestParam(value = "deviceType", required=false) String deviceType) {
         Long userId = userService.loginCheck(header);
-
+        log.info(deviceType);
         log.info("in deviceList");
-        List<DeviceDto> deviceDtoList = deviceService.getDeviceList(userId);
+        List<DeviceDto> deviceDtoList = deviceService.getDeviceList(userId, deviceType);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(deviceDtoList);
     }
 
