@@ -53,9 +53,14 @@ public class DeviceService {
         return map;
     }
 
-    public List<DeviceDto> getDeviceList(Long userId) {
-
-        List<Device> list = deviceRepository.findByUser_UserIdOrderByDeviceIdDesc(userId);
+    public List<DeviceDto> getDeviceList(Long userId, String deviceType) {
+        List<Device> list = null;
+        if (deviceType == null) {
+            list = deviceRepository.findByUser_UserIdAndStatusOrderByDeviceIdDesc(userId, 1);
+        } else {
+            log.info(deviceType);
+            list = deviceRepository.findByUser_UserIdAndStatusAndDeviceTypeOrderByDeviceIdDesc(userId, 1, deviceType);
+        }
         List<DeviceDto> deviceDtoList = new ArrayList<>();
         for (Device device : list) {
             deviceDtoList.add(new DeviceDto(device));
