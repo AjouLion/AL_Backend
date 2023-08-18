@@ -1,10 +1,14 @@
 package Ajoulion_backend.project.Reciever.Service;
 
+import Ajoulion_backend.project.Donator.Repository.DeviceRepository;
 import Ajoulion_backend.project.Error.CustomException;
 import Ajoulion_backend.project.Reciever.Repository.ReceiverRepository;
 import Ajoulion_backend.project.Table.DTO.ApplyDto;
+import Ajoulion_backend.project.Table.DTO.DeviceDto;
 import Ajoulion_backend.project.Table.DTO.UserSimpleDto;
 import Ajoulion_backend.project.Table.Entity.Apply;
+import Ajoulion_backend.project.Table.Entity.Device;
+import Ajoulion_backend.project.Table.Entity.Users;
 import Ajoulion_backend.project.Users.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +28,7 @@ import static Ajoulion_backend.project.Error.ErrorCode.*;
 @RequiredArgsConstructor
 public class ReceiverService {
     private final ReceiverRepository recvRepository;
+    private final UserRepository userRepository;
 
     public List<Map<String, Object>> getApplyList() {
         List<Apply> list = recvRepository.findByUser_IdNotAndStatusOrderByApplyIdDesc("deleted", 1);
@@ -53,8 +58,24 @@ public class ReceiverService {
         return apply;
     }
 
-    public ApplyDto getApplyInfo(Long applyId) {
-        return new ApplyDto(getApply(applyId));
+//    public ApplyDto getApplyInfo(Long applyId) {
+//        return new ApplyDto(getApply(applyId));
+//    }
+
+    public Map<String, Object> getApplyInfo(Long applyId, Long userId) {
+
+        Map<String, Object> ret = new HashMap<>();
+        Apply apply = recvRepository.findByApplyId(applyId);
+        Users receiver = userRepository.findByUserId(userId);
+        if (apply.getDevice() != null) {
+            Device device = apply.getDevice();
+            Users donator = device.getUser();
+            ret.put("device", new DeviceDto(device));
+            ret.put("donator", new UserSimpleDto(donator));
+        }
+        ret.put("apply", new ApplyDto(apply));
+        ret.put("receiver", new UserSimpleDto(receiver));
+        return ret;
     }
 
     public Long save(ApplyDto dto) {

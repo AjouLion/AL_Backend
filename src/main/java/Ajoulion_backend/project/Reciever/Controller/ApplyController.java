@@ -1,7 +1,9 @@
 package Ajoulion_backend.project.Reciever.Controller;
 
+import Ajoulion_backend.project.Donator.Service.DeviceService;
 import Ajoulion_backend.project.Reciever.Service.ReceiverService;
 import Ajoulion_backend.project.Table.DTO.ApplyDto;
+import Ajoulion_backend.project.Table.DTO.DeviceDto;
 import Ajoulion_backend.project.Table.DTO.UserSimpleDto;
 import Ajoulion_backend.project.Users.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class ApplyController {
 
     private final ReceiverService recvService;
     private final UserService userService;
+    private final DeviceService deviceService;
 
     @GetMapping("/apply")
     public ResponseEntity<Map<String, Object>> getApplyList(@RequestHeader HttpHeaders header) {
@@ -44,12 +47,8 @@ public class ApplyController {
         Long userId = userService.loginCheck(header);
 
         log.info("in read all");
-        ApplyDto apply = recvService.getApplyInfo(applyId);
-        UserSimpleDto user = userService.getUserInfo(userId);
-        Map<String, Object> ret = new HashMap<>();
-        ret.put("apply", apply);
-        ret.put("user", user);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ret);
+        Map<String, Object> map = recvService.getApplyInfo(applyId, userId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(map);
     }
 
     @PostMapping("/apply/post")
