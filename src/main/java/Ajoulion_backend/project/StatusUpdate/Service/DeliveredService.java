@@ -1,5 +1,6 @@
 package Ajoulion_backend.project.StatusUpdate.Service;
 
+import Ajoulion_backend.project.Error.CustomException;
 import Ajoulion_backend.project.Table.Entity.Apply;
 import Ajoulion_backend.project.Table.Entity.Device;
 import Ajoulion_backend.project.StatusUpdate.Repository.DeviceStatusRepository;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import static Ajoulion_backend.project.Error.ErrorCode.ERR_DEVICETYPE;
 
 @Slf4j
 @Transactional
@@ -45,6 +48,9 @@ public class DeliveredService {
     public void completeMatching(Long applyId, Long deviceId){
         Device device = deviceStatusRepository.findByDeviceId(deviceId);
         Apply apply = applyStatusRepository.findByApplyId(applyId);
+        if (!device.getDeviceType().equals(apply.getDeviceType())) {
+            throw new CustomException(ERR_DEVICETYPE);
+        }
         device.setApply(apply);
         device.setStatus(2);
         apply.setDevice(device);

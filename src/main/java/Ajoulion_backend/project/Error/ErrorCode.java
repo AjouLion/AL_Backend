@@ -12,6 +12,7 @@ public enum ErrorCode {
     ERR_IMAGE_PROFILE(HttpStatus.BAD_REQUEST, "profile image error"),
     ERR_IMAGE_CERTIFICATION(HttpStatus.BAD_REQUEST, "certification image error"),
     ERR_IMAGE_DEVICE(HttpStatus.BAD_REQUEST, "device image error"),
+    ERR_DEVICETYPE(HttpStatus.BAD_REQUEST, "device Type error"),
 
     // 401 UNAUTHORIZED : 인증되지 않은 사용자
     ERR_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "not logged in"),
