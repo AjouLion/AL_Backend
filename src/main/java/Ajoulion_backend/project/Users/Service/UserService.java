@@ -42,6 +42,7 @@ public class UserService {
             throw new CustomException(ERR_DUPLICATE_ID);
         }
         userDto.setCategory(category);
+        userDto.setIsDeleted(false);
         userDto.setProfile(null);
         userDto.setCertification(null);
         user = new Users(userDto);
@@ -79,7 +80,7 @@ public class UserService {
     public UserSimpleDto login(String id, String password){
         Users user = userRepository.findById(id);
         if (user == null)  return null;
-        if (user.getPassword() == null) return null; // delete user
+        if (user.getIsDeleted() == true) return null; // delete user
         if (user.getPassword().equals(password)) {
             return (new UserSimpleDto(user));
         }
@@ -116,11 +117,12 @@ public class UserService {
         Users user = getUser(userId);
         ImageUpload.deleteProfileImage(user);
         ImageUpload.deleteCertificationImage(user);
-        user.setName("deleted");
-        user.setId("deleted");
-        user.setCertification(null);
-        user.setProfile(null);
-        user.setPassword(null);
+//        user.setName("deleted");
+//        user.setId("deleted");
+//        user.setCertification(null);
+//        user.setProfile(null);
+//        user.setPassword(null);
+        user.setIsDeleted(true);
     }
 
     @Transactional

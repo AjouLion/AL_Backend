@@ -26,7 +26,7 @@ public class ReceiverService {
     private final ReceiverRepository recvRepository;
 
     public List<Map<String, Object>> getApplyList() {
-        List<Apply> list = recvRepository.findNotByUser_IdAndStatusOrderByApplyIdDesc("delete", 1);
+        List<Apply> list = recvRepository.findByUser_IdNotAndStatusOrderByApplyIdDesc("deleted", 1);
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (Apply apply : list) {
             Map<String, Object> map = new HashMap<>();

@@ -22,7 +22,7 @@ import static Ajoulion_backend.project.Error.ErrorCode.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://front-server.com")
 @RequestMapping("/users")
 public class LoginController {
 

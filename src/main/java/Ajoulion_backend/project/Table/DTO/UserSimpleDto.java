@@ -14,6 +14,7 @@ public class UserSimpleDto {
     private String name;
     private String profile;
     private Integer category;
+    private Boolean isDeleted;
 
     public UserSimpleDto(Users entity) {
         userId = entity.getUserId();
@@ -21,5 +22,6 @@ public class UserSimpleDto {
         name = entity.getName();
         profile = ImageUpload.getProfilePath(userId, entity.getProfile());
         category = entity.getCategory();
+        isDeleted = entity.getIsDeleted();
     }
 }

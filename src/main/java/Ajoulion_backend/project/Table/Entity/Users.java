@@ -28,6 +28,8 @@ public class Users {
     @Column(length = 300)
     private String certification;
     private Integer category;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
 
     @OneToMany(mappedBy = "user")
     private List<Apply> apply = new ArrayList<Apply>();
@@ -43,6 +45,7 @@ public class Users {
         profile = dto.getProfile();
         certification = dto.getCertification();
         category = dto.getCategory();
+        isDeleted = dto.getIsDeleted();
     }
 
 }
