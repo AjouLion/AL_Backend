@@ -16,6 +16,7 @@ public class UsersDto {
     private String profile;
     private String certification;
     private Integer category;
+    private Boolean isDeleted;
 
     public UsersDto(Users entity) {
         userId = entity.getUserId();
@@ -25,5 +26,6 @@ public class UsersDto {
         profile = ImageUpload.getProfilePath(userId, entity.getProfile());
         certification = ImageUpload.getCertificationPath(userId, entity.getCertification());
         category = entity.getCategory();
+        isDeleted = entity.getIsDeleted();
     }
 }
